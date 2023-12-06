@@ -1,0 +1,36 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+file_path='C:/so/ex1data1.txt'
+dataset = np.loadtxt(file_path, delimiter=',')
+
+x=dataset[:,0]
+y=dataset[:,1]
+
+w=0
+b=0
+
+lrate=0.01
+epochs=1000
+
+n=float(len(x))
+
+def mse(x, y):
+    return (1/n)*np.sum((x-y)**2)
+
+for i in range(epochs):
+    y_pred = w*x+b
+    error=mse(y_pred,y)
+    dw=(2/n)*np.sum(x*(y_pred-y))
+    db=(2/n)*np.sum(y_pred-y)
+    w=w-lrate*dw
+    b=b-lrate*dw
+
+print("평균 제곱 오차는:",error)
+
+print(w,b)
+
+y_pred=w*x+b
+plt.scatter(x,y)
+plt.plot([min(x),max(x)],[min(y_pred),max(y_pred)],color='red')
+plt.show()
